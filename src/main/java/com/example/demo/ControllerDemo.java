@@ -21,11 +21,11 @@ public class ControllerDemo {
         System.out.println("Route is " + newRoute);
         System.out.println(Task.isItAGoodRoute(newRoute));
 
-       String SQL = "INSERT INTO RoutesOne VALUES(" + newRoute + "); commit;";
-      //  ResultSet resultSet = statement.executeQuery(SQL);
-     //    while (resultSet.next()){
+        String SQL = "INSERT INTO RoutesOne VALUES(" + newRoute + ")";
+        ResultSet resultSet = statement.executeQuery(SQL);
+           while (resultSet.next()){
           statement.executeUpdate(SQL);
-      //  }
+        }
 
         return Task.isItAGoodRoute(newRoute);
     }
