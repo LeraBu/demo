@@ -4,13 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import static com.example.demo.DemoConnection.connection;
-import static com.example.demo.DemoConnection.statement;
+import java.util.List;
 
 @RestController
 public class ControllerDemo {
@@ -20,39 +15,16 @@ public class ControllerDemo {
         String newRoute = request.getParameter("newRoute");
         System.out.println("Route is " + newRoute);
         System.out.println(Task.isItAGoodRoute(newRoute));
-
-        String SQL = "INSERT INTO RoutesOne VALUES(" + newRoute + ")";
-        ResultSet resultSet = statement.executeQuery(SQL);
-           while (resultSet.next()){
-          statement.executeUpdate(SQL);
-        }
-
         return Task.isItAGoodRoute(newRoute);
     }
+   @GetMapping("/allRoutes")
+    public List<String> allRoutes(){
+        List<String> index = RoutesDao.index();
+    //    for (int i = 0; i<= index.size(); i++){
+    //        System.out.println(index.get(i));
+     //   }
+        return index;
+    }
 
-
-
-  /*  public ArrayList<Route> index(){
-        ArrayList<Route> routes = new ArrayList<Route>();
-        String SQL = "SELECT * FROM routes";
-        ResultSet resultSet = DemoConnection.statement.executeQuery(SQL);
-
-        while (resultSet.next()){
-            Route route = new Route(resultSet.getInt("id"), resultSet.getString("description"));
-          //  route.setId();
-          //  route.setDescription();
-
-            routes.add(route);
-        }
-
-            return routes;
-    } */
-
-    /* @GetMapping("/result")
-    public String result(){
-        String route = "NSEWNSWENSNNNNNNNN";
-        String goodOrBad = Task.isItAGoodRoute(route);
-        return goodOrBad;
-    } */
 }
 

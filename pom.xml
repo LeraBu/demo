@@ -58,10 +58,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!--JUnit 5 requires Surefire version 2.22.0 or higher -->
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
 		</plugins>
 	</build>
 
