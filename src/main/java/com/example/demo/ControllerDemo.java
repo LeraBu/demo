@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @RestController
@@ -15,6 +16,7 @@ public class ControllerDemo {
         String newRoute = request.getParameter("newRoute");
         System.out.println("Route is " + newRoute);
         System.out.println(Task.isItAGoodRoute(newRoute));
+        RoutesDao.save(newRoute);
         return Task.isItAGoodRoute(newRoute);
     }
    @GetMapping("/allRoutes")

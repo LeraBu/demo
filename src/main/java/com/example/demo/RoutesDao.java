@@ -44,7 +44,7 @@ public class RoutesDao {
         }
         return routesFromBD;
     }
-    public void save(String route) {
+    public static void save(String route) {
         try {
             Statement statement = connection.createStatement();
             String SQL = "INSERT INTO databasethree VALUES(" + "'" + route + "')";
