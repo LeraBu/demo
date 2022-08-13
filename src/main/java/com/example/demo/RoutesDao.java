@@ -32,7 +32,7 @@ public class RoutesDao {
 
         try {
             Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM databasethree";
+            String SQL = "SELECT * FROM mythreetable";
             ResultSet resultSet = statement.executeQuery(SQL);
             while (resultSet.next()){
                 String route = resultSet.getString("route");
@@ -44,10 +44,10 @@ public class RoutesDao {
         }
         return routesFromBD;
     }
-    public static void save(String route) {
+    public static void save(Route route) {
         try {
             Statement statement = connection.createStatement();
-            String SQL = "INSERT INTO databasethree VALUES(" + "'" + route + "')";
+            String SQL = "INSERT INTO mythreetable VALUES(" + route.getId() + ", '" + route.getDescription() + "', '" + route.getGoodorbad() + "')";
             statement.executeUpdate(SQL);
         } catch (SQLException e) {
             e.printStackTrace();
