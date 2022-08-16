@@ -26,9 +26,9 @@ public class ControllerDemo {
 
     }
    @GetMapping("/allRoutes")
-    public List<String> allRoutes(){
-        List<String> index = RoutesDao.index();
-        return index;
+    public List<Route> allRoutes(){
+        List<Route> allRoutes = RoutesDao.index();
+        return allRoutes;
     }
 
     // метод возвращает маршрут из дб по его id
