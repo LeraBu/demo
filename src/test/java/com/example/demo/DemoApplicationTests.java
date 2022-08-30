@@ -19,6 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -62,23 +63,22 @@ public class DemoApplicationTests {
 
     @Test
     public void dbTest() throws Exception {
-
         String routeTest = "NSNSNSNSNS";
-        int testId = 1;
         Route route = new Route(1, routeTest, Task.isItAGoodRoute(routeTest));
+        MvcResult mvcResult = mockMvc.perform(get("/hello?newRoute={route}", routeTest))
+                .andDo(print())
+                .andExpect(content().string("This is a good route"))
+                .andReturn();
+
         DBObject objectToSave = BasicDBObjectBuilder.start()
                 .add(route.getDescription(), route.getGoodorbad())
                 .get();
 
         mongoTemplate.save(objectToSave, "collection");
-        assertThat(mongoTemplate.findAll(DBObject.class, "collection")).extracting("NSNSNSNSNS")
-                .containsOnly("This is a good route");
-
-        mockMvc.perform(get("/hello?newRoute={route}", routeTest))
-                .andDo(print())
-                .andExpect(content().string("This is a good route"));
+        assertThat(mongoTemplate.findAll(DBObject.class, "collection"))
+                .extracting(route.getDescription())
+                .containsOnly(mvcResult.getResponse().getContentAsString());
     }
-
 
 }
 
