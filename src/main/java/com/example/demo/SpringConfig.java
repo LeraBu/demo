@@ -1,11 +1,14 @@
 package com.example.demo;
 
+import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Component
 public class SpringConfig {
@@ -28,5 +31,10 @@ public class SpringConfig {
     public Server h2Server() throws SQLException {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     } */
+   @Profile("dev")
+   @Bean(initMethod = "start", destroyMethod = "stop")
+   public Server h2Server() throws SQLException {
+       return Server.createTcpServer("-tcp","-tcpAllowOthers","-tcpPort","9092");
+   }
 
 }

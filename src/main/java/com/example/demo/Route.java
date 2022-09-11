@@ -2,11 +2,20 @@ package com.example.demo;
 
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "testdb")
 public class Route {
-   // public static int ROUTES_COUNT = 0;
+    @Id
     private int id;
     private String description;
     private String goodorbad;
+
+    public Route() {
+    }
 
     public Route(int id, String description, String goodorbad) {
         this.id = id;
