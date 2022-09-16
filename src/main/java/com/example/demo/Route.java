@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "testdb")
+//@Entity
+//@Table(name = "testdb")
 public class Route {
-    @Id
+   // @Id
     private int id;
     private String description;
     private String goodorbad;
@@ -56,3 +56,11 @@ public class Route {
                 '}';
     }
 }
+/*
+<dependency>
+<groupId>javax.persistence</groupId>
+<artifactId>persistence-api</artifactId>
+<version>1.0.2</version>
+</dependency>
+
+ */
