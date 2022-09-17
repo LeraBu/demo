@@ -40,8 +40,8 @@ public class RoutesDao {
        return jdbcTemplate.query("SELECT * FROM mythreetable", new RouteMapper());
    }
 
-    public static void save(Route route) {
-        jdbcTemplate.update("INSERT INTO mythreetable VALUES(" + route.getId() + ", '" + route.getDescription() + "', '" + route.getGoodorbad() + "')");
+    public static void save(Route route, String tableName) {
+        jdbcTemplate.update("INSERT INTO " + tableName + " VALUES(" + route.getId() + ", '" + route.getDescription() + "', '" + route.getGoodorbad() + "')");
     }
 
 }

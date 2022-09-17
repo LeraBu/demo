@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "testdb")
+@Entity
+@Table(name = "testdb")
 public class Route {
-   // @Id
+    @Id
     private int id;
     private String description;
     private String goodorbad;

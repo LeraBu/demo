@@ -21,7 +21,7 @@ public class ControllerDemo {
         System.out.println("Route is " + newRoute);
         System.out.println(Task.isItAGoodRoute(newRoute));
         Route route = new Route(++ROUTES_COUNT, newRoute, Task.isItAGoodRoute(newRoute));
-        RoutesDao.save(route);
+        RoutesDao.save(route, "mythreetable");
         return Task.isItAGoodRoute(newRoute);
 
     }
