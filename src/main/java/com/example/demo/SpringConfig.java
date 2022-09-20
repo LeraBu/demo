@@ -22,6 +22,8 @@ public class SpringConfig {
         dataSource.setUsername("postgres");
         return dataSource;
     }
+
+
     @Bean
     public JdbcTemplate jdbcTemplate(){
         return new JdbcTemplate(dataSource());
