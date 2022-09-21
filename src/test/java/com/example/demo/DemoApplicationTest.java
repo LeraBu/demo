@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import javax.sql.DataSource;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,11 +47,7 @@ class DemoApplicationTest {
     @Autowired
     private ControllerDemo controllerDemo;
 
-    @Autowired
-    public JdbcTemplate jdbcTemplateTest(){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(TestConfig.dataSourceTest());
-        return jdbcTemplate;
-    }
+    String routeTest = "NSNSNSNSNS";
 
     @Autowired
     public DemoApplicationTest(JdbcTemplate jdbcTemplateTest) {
@@ -63,8 +60,6 @@ class DemoApplicationTest {
         System.out.println("table created");
     }
 
-    String routeTest = "NSNSNSNSNS";
-
     @Test
     public void myTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/hello?newRoute={route}", routeTest))
@@ -74,19 +69,16 @@ class DemoApplicationTest {
 
         String resultRoute = result.getResponse().getContentAsString();
         System.out.println("!!!!!!Content =" + resultRoute);
-        Route routeRes = new Route(1, resultRoute, Task.isItAGoodRoute(resultRoute));
+        Route routeRes = new Route(1, routeTest, resultRoute);
         jdbcTemplateTest.update("INSERT INTO testTable VALUES(" + routeRes.getId() + ", '" + routeRes.getDescription() + "', '" + routeRes.getGoodorbad() + "')");
         System.out.println(jdbcTemplateTest.query("SELECT * FROM testTable", new RouteMapper()));
-      //  Route routeFromTable = jdbcTemplateTest.query("SELECT * FROM testTable WHERE ID = '1'", new RouteMapper());
-        assertEquals(resultRoute, (jdbcTemplateTest.query("SELECT * FROM testTable WHERE ID = '1'", new RouteMapper())));
-
+        assertEquals(routeTest, (jdbcTemplateTest.query("SELECT * FROM testTable WHERE ID = '1'", new RouteMapper())
+                .stream().findAny().orElse(null)).getDescription());
     }
 
     @AfterEach
     public void tearDown() {
-     //   testTable.shutdown();
         jdbcTemplateTest.update("drop table testTable");
         System.out.println("testTable deleted");
     }
 }
-
